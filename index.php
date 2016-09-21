@@ -19,30 +19,26 @@
                 </tr>
                 <tr>
                     <td class="labelcol">fade_on_update</td>
-                    <td class="valuecol"><input type="checkbox"></input></td>
+                    <td class="valuecol"><input class="" type="checkbox"></input></td>
                 </tr>
                 <tr>
                     <td class="labelcol">console_autoscroll</td>
-                    <td class="valuecol"><input type="checkbox"></input></td>
+                    <td class="valuecol"><input id="control_console_autoscroll" type="checkbox"></input></td>
                 </tr>
                 <tr>
                     <td class="labelcol">customize_panes</td>
-                    <td class="valuecol"><input type="checkbox"></input></td>
+                    <td class="valuecol"><input id="control_customize_panes" type="checkbox"></input></td>
                 </tr>
             </table>
         </div>
     </div>
-    <div class="pluginbox">
+    <div class="pluginbox plugin-console" >
+        <div class="pluginbox-buttons">
+            <span class="clear-console">&#10008;</span>
+        </div>
         <div class="pluginbox-title">console</div>
         <div class="pluginbox-content scrollable-console">
-            <div> a </div>
-            <div> b </div>
-            <div> c </div>
-            <div> d </div>
-            <div> e </div>
-            <div> f </div>
-            <div> g </div>
-            <div> h </div>
+
         </div>
     </div>
     
@@ -103,11 +99,32 @@
             overflow-y:scroll;
             max-height:80px;
         }
+
+        .pluginbox-buttons{
+            float:left;
+            color:white;
+        }
+
+        .pluginbox-buttons span {
+            cursor:pointer;
+        }
+
     </style>
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script src="jquery.color.js"></script>
     <script src="messagebroker.js"></script>
     <script src="serializer.js"></script>
-    
+    <script src="serviceconsole.js"></script>
+
+    <script>
+        $(function() {
+            $("#control_console_autoscroll").change(function() {
+                MessageBroker.send("serviceconsole.autoscroll",$(this).prop("checked"));
+            });
+
+            MessageBroker.broadcast("appstart");
+        });
+    </script>
 </body>
 
 </html>
