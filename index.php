@@ -42,6 +42,12 @@
 
             </div>
         </div>
+
+        <div class="pluginbox plugin-campreview" >
+            <div class="pluginbox-title">cam_preview</div>
+            <div class="pluginbox-content"></div>
+        </div>
+
         <div class="pluginbox">
             <div class="pluginbox-title">debug_pane</div>
             <div class="pluginbox-content">
@@ -55,7 +61,7 @@
     
     <style>
         .pluginbox {
-            width:500px;
+            min-width:500px;
             float:left;
             border:1px solid #58c;
             border-radius: 15px;
@@ -125,6 +131,12 @@
             color:#999;
         }
 
+        .plugin-campreview .pluginbox-content{
+            width:640px;
+            height:480px;
+        }
+
+
     </style>
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script src="jquery.color.js"></script>
@@ -132,6 +144,7 @@
     <script src="serializer.js"></script>
     <script src="serviceconsole.js"></script>
     <script src="uptime.js"></script>
+    <script src="campreview.js"></script>
 
     <script>
         $(function() {
