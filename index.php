@@ -6,9 +6,9 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Poiret+One|Quicksand" rel="stylesheet">
 <body>
     <div id="pluginbox-container">
-        <div class="pluginbox">
+        <div class="pluginbox plugin-uptime">
             <div class="pluginbox-title">uptime</div>
-            <div class="pluginbox-content">2:13  up 1 day,  4:17, 3 users, load averages: 2,10 2,27 1,97</div>
+            <div class="pluginbox-content">-- empty --</div>
         </div>
         <div class="pluginbox">
             <div class="pluginbox-title">control_panel</div>
@@ -131,6 +131,7 @@
     <script src="messagebroker.js"></script>
     <script src="serializer.js"></script>
     <script src="serviceconsole.js"></script>
+    <script src="uptime.js"></script>
 
     <script>
         $(function() {
@@ -186,6 +187,16 @@
                 MessageBroker.send("serviceconsole.autoscroll",false === $(this).prop("checked"));
             });
 
+            $("#control_refresh_rate").change(function() {
+                var val = 1*$(this).val();
+                if (val < 1 || 0 != val*0 || val > 36000) {
+                    MessageBroker.send("serviceconsole.write", "refresh_rate <1 .. 36000> ");
+                }
+                else {
+                    MessageBroker.send("global.refreshrate", val);
+                }
+            });
+
             function doMoveUp() {
                 var pluginBox = parentPluginBox(this);
                 if (0 === pluginBox.prev().length) { return;}
@@ -225,19 +236,7 @@
             }
 
             function animateTransition(fromParam,to) {
-                var animBox = $("<div>").css({
-                    position:'absolute',
-                    top: fromParam.top,
-                    left:fromParam.left,
-                    width:fromParam.width,
-                    height:fromParam.height,
-                    backgroundColor:"#fff",
-                    border: fromParam.border,
-                    borderRadius: fromParam.borderRadius,
-                    padding:fromParam.padding,
-                    opacity:0.5
-                })
-
+                var animBox = makeAnimbox(fromParam);
 
                 var toOffset = to.offset();
                 var toSize = {width: to.width(), height: to.height()};
@@ -249,6 +248,21 @@
                     height:toOffset.height,
                     opacity:0
                 }, {complete: function() { animBox.remove(); }});
+            }
+
+            function makeAnimbox(fromParam) {
+                return $("<div>").css({
+                    position:'absolute',
+                    top: fromParam.top,
+                    left:fromParam.left,
+                    width:fromParam.width,
+                    height:fromParam.height,
+                    backgroundColor:"#fff",
+                    border: fromParam.border,
+                    borderRadius: fromParam.borderRadius,
+                    padding:fromParam.padding,
+                    opacity:0.5
+                });
             }
 
             function prependPanesManager() {
@@ -297,6 +311,18 @@
                     }
                 });
             });
+
+            MessageBroker.subscribe("global.pluginupdate", function(what, param) {
+                if ($("#control_fade_on_update").prop("checked")) {
+                    fadeComponent(param.pluginbox);
+                }
+            });
+
+            function fadeComponent(pluginbox) {
+                var animBox = makeAnimbox(animParams(pluginbox));
+                $("body").append(animBox);
+                animBox.animate({opacity:0}, {complete: function() { animBox.remove(); }});
+            }
 
             MessageBroker.broadcast("appstart");
             MessageBroker.broadcast("serializer.boot");
