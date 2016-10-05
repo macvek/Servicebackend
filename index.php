@@ -1,4 +1,4 @@
-<?php require 'engine.php'; ?>
+<?php require 'security.php'; ?>
 <!doctype html>
 <html>
 <head>
@@ -58,8 +58,18 @@
             </div>
         </div>
     </div>
-    
+    <a id="logout" href="logout.php">LOGOUT</a>
     <style>
+        a#logout, a:visited#logout {
+            position:absolute;
+            right:0;
+            top:0;
+            display:block;
+            color:#a9c;
+            font-family: 'Open Sans Condensed', sans-serif;
+            text-decoration:none;
+        }
+
         .pluginbox {
             min-width:500px;
             float:left;
@@ -77,10 +87,8 @@
         }
 
         .pluginbox-content {
-            color:#eee;
             font-family: 'Poiret One', cursive;
             color:#a9c;
-            
         }
 
         body {
