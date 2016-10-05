@@ -16,15 +16,15 @@
                 <table class="withvalues">
                     <tr>
                         <td class="labelcol">refresh_rate</td>
-                        <td class="valuecol"><input></input></td>
+                        <td class="valuecol"><input id="control_refresh_rate"></input></td>
                     </tr>
                     <tr>
                         <td class="labelcol">fade_on_update</td>
-                        <td class="valuecol"><input class="" type="checkbox"></input></td>
+                        <td class="valuecol"><input id="control_fade_on_update" type="checkbox"></input></td>
                     </tr>
                     <tr>
-                        <td class="labelcol">console_autoscroll</td>
-                        <td class="valuecol"><input id="control_console_autoscroll" type="checkbox"></input></td>
+                        <td class="labelcol">console_scroll_lock</td>
+                        <td class="valuecol"><input id="control_console_scroll_lock" type="checkbox"></input></td>
                     </tr>
                     <tr>
                         <td class="labelcol">customize_panes</td>
@@ -182,8 +182,8 @@
 
             });
             
-            $("#control_console_autoscroll").change(function() {
-                MessageBroker.send("serviceconsole.autoscroll",$(this).prop("checked"));
+            $("#control_console_scroll_lock").change(function() {
+                MessageBroker.send("serviceconsole.autoscroll",false === $(this).prop("checked"));
             });
 
             function doMoveUp() {
@@ -272,6 +272,31 @@
                 }
             });
 
+
+            MessageBroker.subscribe("serializer.pack", function() {
+                 var controls = {
+                     "customize_panes" : $("#control_customize_panes").prop("checked"),
+                     "console_scroll_lock" : $("#control_console_scroll_lock").prop("checked"),
+                     "fade_on_update" : $("#control_fade_on_update").prop("checked"),
+                     "refresh_rate" : $("#control_refresh_rate").val()
+                 };
+
+                 MessageBroker.send("serializer.store", {
+                     name:"controlpanel.controls",
+                     store: controls
+                 });
+            });
+
+            MessageBroker.subscribe("serializer.unpack", function() {
+                MessageBroker.send("serializer.load", "controlpanel.controls", function(controls) {
+                    if (controls) {
+                        $("#control_customize_panes").prop("checked", controls["customize_panes"]).change();
+                        $("#control_console_scroll_lock").prop("checked", controls["console_scroll_lock"]).change();
+                        $("#control_fade_on_update").prop("checked", controls["fade_on_update"]).change();
+                        $("#control_refresh_rate").val(controls["refresh_rate"]).change();
+                    }
+                });
+            });
 
             MessageBroker.broadcast("appstart");
             MessageBroker.broadcast("serializer.boot");
