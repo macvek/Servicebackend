@@ -1,9 +1,9 @@
 <?php
 require 'security.php';
 
-if (!@$_POST['operation']) { return; }
+if (!@$_GET['operation']) { return; }
 
-function turnCamOn() {
+function turnCamOn() {  
   touch("daemoncmd/on");
 }
 
@@ -11,7 +11,7 @@ function turnCamOff() {
   touch("daemoncmd/off");
 }
 
-switch($_POST['operation']) {
+switch($_GET['operation']) {
     case "on":
         turnCamOn(); echo "on"; break;
     case "off":

@@ -18,7 +18,7 @@ ARCHIVES=`ls archives/snaparchive_*`
 
 for EARLIEST in $ARCHIVES
 do
-    rm $EARLIEST
+    rm -f $EARLIEST
     break
 done
 
