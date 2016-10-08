@@ -12,7 +12,8 @@ var campreview = new function() {
 
     function refresh() {
         $(".plugin-campreview .pluginbox-content").css({
-            "background-image":"url(campreview.php?q="+Math.random()+")"
+            "background-image":"url(campreview.php?q="+Math.random()+")",
+            "background-size" : "cover"
         });
 
         MessageBroker.send("global.pluginupdate", {pluginbox:$(".plugin-campreview")});

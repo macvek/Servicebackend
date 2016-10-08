@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SIZELIMIT=140
+SIZELIMIT=4096
 SIZE=0
-LIST=`du archives`
+LIST=`du -m archives`
 for I in $LIST
 do
   SIZE=$I
