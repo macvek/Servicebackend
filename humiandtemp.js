@@ -1,4 +1,5 @@
 var humiandtemp = new function() {
+    MessageBroker.subscribe("appstart", boot);
     MessageBroker.subscribe("global.refreshrate", onRefreshRate);
     var interval;
 
