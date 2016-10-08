@@ -10,6 +10,14 @@
             <div class="pluginbox-title">uptime</div>
             <div class="pluginbox-content">-- empty --</div>
         </div>
+        <div class="pluginbox plugin-humiandtemp">
+            <div class="pluginbox-title">humidity_and_temperature</div>
+            <div class="pluginbox-content">
+                <span>Temperature: <span class="temperature"></span> <br/>
+                <span>Humidity: <span class="humidity"></span> <br/>
+                <span>Date: <span class="date"></span> <br/>
+            </div>
+        </div>
         <div class="pluginbox">
             <div class="pluginbox-title">control_panel</div>
             <div class="pluginbox-content">
@@ -158,6 +166,7 @@
     <script src="uptime.js"></script>
     <script src="campreview.js"></script>
     <script src="camoperator.js"></script>
+    <script src="humiandtemp.js"></script>
 
     <script>
         $(function() {
