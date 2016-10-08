@@ -7,7 +7,7 @@ do
   if [ -e daemoncmd/on ] 
   then
     ./turnCamOn.sh
-    rm daemoncmd/on
+    rm -f daemoncmd/on
   fi 
 
   if [ -e daemoncmd/off ]
@@ -15,12 +15,12 @@ do
     ./turnCamOff.sh
     ./archiveSnapshots.sh 
     ./archiveSnapshotsGC.sh 
-    rm daemoncmd/off
+    rm -f daemoncmd/off
   fi
 
   if [ -e daemoncmd/stop ]
   then
-    rm daemoncmd/stop
+    rm -f daemoncmd/stop
     exit
   fi
 done
