@@ -9,6 +9,8 @@ function turnCamOn() {
 
 function turnCamOff() {
     system("./turnCamOff.sh");
+    system("./archiveSnapshots.sh");
+    
 }
 
 switch($_POST['operation']) {
