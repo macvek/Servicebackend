@@ -25,7 +25,7 @@ var humiandtemp = new function() {
             MessageBroker.send("serviceconsole.write","Error humiandtemp: "+content.error);
         }
         else {
-            $(".temperature", $plugin).text(content.temperature+" °C");
+            $(".temperature", $plugin).html(content.temperature+" &deg;C");
             $(".humidity", $plugin).text(content.humidity+" %");
             $(".date", $plugin).text(content.date);
             if (!content.checksum) {
