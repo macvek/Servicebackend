@@ -30,6 +30,10 @@
                         <td class="labelcol">customize_panes</td>
                         <td class="valuecol"><input id="control_customize_panes" type="checkbox"></input></td>
                     </tr>
+                    <tr>
+                        <td class="labelcol">cam_operating</td>
+                        <td class="valuecol"><input id="control_cam_operating" type="checkbox"></input></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -141,7 +145,7 @@
 
         .plugin-campreview .pluginbox-content{
             width:640px;
-            height:480px;
+            height:400px;
         }
 
 
@@ -153,6 +157,7 @@
     <script src="serviceconsole.js"></script>
     <script src="uptime.js"></script>
     <script src="campreview.js"></script>
+    <script src="camoperator.js"></script>
 
     <script>
         $(function() {
@@ -307,13 +312,23 @@
                 }
             });
 
+            $("#control_cam_operating").change(function() {
+                if ($(this).prop("checked")) {
+                    MessageBroker.send("camoperator.on");
+                }
+                else {
+                    MessageBroker.send("camoperator.off");
+                }
+            });
+
 
             MessageBroker.subscribe("serializer.pack", function() {
                  var controls = {
                      "customize_panes" : $("#control_customize_panes").prop("checked"),
                      "console_scroll_lock" : $("#control_console_scroll_lock").prop("checked"),
                      "fade_on_update" : $("#control_fade_on_update").prop("checked"),
-                     "refresh_rate" : $("#control_refresh_rate").val()
+                     "refresh_rate" : $("#control_refresh_rate").val(),
+                     "cam_operator" : $("#control_cam_operating").prop("checked")
                  };
 
                  MessageBroker.send("serializer.store", {
@@ -329,6 +344,7 @@
                         $("#control_console_scroll_lock").prop("checked", controls["console_scroll_lock"]).change();
                         $("#control_fade_on_update").prop("checked", controls["fade_on_update"]).change();
                         $("#control_refresh_rate").val(controls["refresh_rate"]).change();
+                        $("#control_cam_operating").prop("checked", controls["cam_operator"]).change();
                     }
                 });
             });

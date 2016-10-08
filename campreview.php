@@ -1,6 +1,6 @@
 <?php
 require 'security.php';
 
-header('Content-Type: image/png');
+header('Content-Type: image/jpeg');
 header("Cache-Control: no-cache, must-revalidate");
-readfile("sample.png");
+readfile("snapshot.jpeg");
