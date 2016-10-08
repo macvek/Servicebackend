@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat temphumidata.txt
+tail -n 20 /home/pi/serial_dump.txt
