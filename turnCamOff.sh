@@ -1,3 +1,2 @@
 #!/bin/bash
-
-rm snapshot.jpeg
+killall streamer
