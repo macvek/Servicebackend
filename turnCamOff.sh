@@ -1,2 +1,4 @@
 #!/bin/bash
-killall streamer
+
+echo "dummy turn cam off"
+#killall streamer
